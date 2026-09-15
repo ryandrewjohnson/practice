@@ -4,9 +4,9 @@ Progress tracker for the timed exercise in `babylist-ai-codespace-practice/`.
 
 ## Status
 
-- **Current:** 1.1 — Setup: test tooling + tracking docs
-- **Completed:** —
-- **Up next:** 1.2 — Funding progress indicator
+- **Current:** 1.2 — Funding progress indicator
+- **Completed:** 1.1 — Setup: test tooling + tracking docs
+- **Up next:** Task 2 (`tasks/task-2.md`)
 
 Status values: `Not started` / `In progress` / `Blocked` / `Complete`
 
@@ -45,9 +45,9 @@ Every item must be confirmed before a sub-task is marked Complete.
 
 #### 1.1 — Setup: test tooling + tracking docs
 
-**Status:** In progress
+**Status:** Complete
 **Branch:** `task-1.1-setup`
-**PR:** —
+**PR:** https://github.com/ryandrewjohnson/practice/pull/2
 
 Scope:
 - Start from `main` in the worktree, so `src/app/page.tsx` is back at `main`
@@ -64,8 +64,8 @@ Before you start
 - [x] Ensure there are no uncommitted changes (fresh worktree from `main`)
 
 Definition of done
-- [ ] Commit changes
-- [ ] Create PR for review
+- [x] Commit changes
+- [x] Create PR for review
 
 #### 1.2 — Funding progress indicator
 
