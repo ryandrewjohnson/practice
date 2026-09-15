@@ -93,3 +93,20 @@ describe("funding helpers — unhappy path", () => {
     expect(formatPrice(overageCents(c))).toBe("$0.01");
   });
 });
+
+describe("formatPrice", () => {
+  it("formats positive amounts and zero", () => {
+    expect(formatPrice(42000)).toBe("$420.00");
+    expect(formatPrice(1)).toBe("$0.01");
+    expect(formatPrice(0)).toBe("$0.00");
+  });
+
+  it("puts the sign before the currency symbol for negative amounts", () => {
+    expect(formatPrice(-500)).toBe("-$5.00");
+    expect(formatPrice(-1)).toBe("-$0.01");
+  });
+
+  it("does not show a sign for negative zero", () => {
+    expect(formatPrice(-0)).toBe("$0.00");
+  });
+});
