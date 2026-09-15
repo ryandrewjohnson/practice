@@ -21,8 +21,7 @@ function expectedFor(campaign: GiftCampaign) {
   };
 }
 
-// Pending until sub-task 1.2 implements the indicator — remove `.fixme` then.
-test.describe.fixme("Task 1 — funding progress indicator", () => {
+test.describe("Task 1 — funding progress indicator", () => {
   test("data fixture contains both a normal and an overfunded campaign", () => {
     const percents = campaigns.map((c) => expectedFor(c));
     expect(percents.some((p) => !p.isOverfunded)).toBe(true);

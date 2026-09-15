@@ -4,7 +4,8 @@ Progress tracker for the timed exercise in `babylist-ai-codespace-practice/`.
 
 ## Status
 
-- **Current:** 1.2 — Funding progress indicator
+- **Current:** 1.2 — Funding progress indicator (re-opened: PR into `main`
+  awaiting merge)
 - **Completed:** 1.1 — Setup: test tooling + tracking docs
 - **Up next:** Task 2 (`tasks/task-2.md`)
 
@@ -25,6 +26,7 @@ Every item must be confirmed before a sub-task is marked Complete.
 
 - [ ] Commit changes
 - [ ] Create PR for review
+- [ ] PR merged into `main` (verify the change is on `origin/main`)
 
 ## How we split work
 
@@ -33,14 +35,16 @@ Every item must be confirmed before a sub-task is marked Complete.
 - Each sub-task is an isolated piece of work that can be committed on its own.
 - Don't oversplit: if the work fits cleanly in one commit, keep it as one
   sub-task.
-- Each sub-task gets its own branch and PR.
+- Each sub-task gets its own branch and PR, branched from the latest `main`
+  and targeting `main`. Don't stack PRs — if a sub-task depends on another,
+  wait for that PR to merge and pull `main` first.
 - A task is Complete when all of its sub-tasks are Complete.
 
 ## Tasks
 
 ### Task 1 — Funding progress (`tasks/task-1.md`)
 
-**Status:** In progress
+**Status:** In progress (1.2 awaiting merge into `main`)
 **Worktree:** `.claude/worktrees/task-1`
 
 #### 1.1 — Setup: test tooling + tracking docs
@@ -66,13 +70,14 @@ Before you start
 Definition of done
 - [x] Commit changes
 - [x] Create PR for review
+- [x] PR merged into `main` (merge commit `9d109c7`)
 
 #### 1.2 — Funding progress indicator
 
-**Status:** Not started
-**Branch:** `task-1.2-funding-progress` (stacked on `task-1.1-setup`; PR
-targets it until 1.1 merges)
-**PR:** —
+**Status:** In progress — PR into `main` awaiting merge
+**Branch:** `task-1.2-funding-progress`
+**PR:** https://github.com/ryandrewjohnson/practice/pull/4 (replaces #3, which
+merged into `task-1.1-setup` instead of `main`)
 
 Scope:
 - `src/lib/funding.ts`: pure helpers `totalContributed`, `percentFunded`,
@@ -94,11 +99,12 @@ Hand-check values:
 | Monitor | $220.00 / $199.00 | 110.6% | +$21.00 |
 
 Before you start
-- [ ] Ensure there are no uncommitted changes
+- [x] Ensure there are no uncommitted changes
 
 Definition of done
-- [ ] Commit changes
-- [ ] Create PR for review
+- [x] Commit changes
+- [x] Create PR for review
+- [ ] PR merged into `main` (verify the change is on `origin/main`)
 
 ### Task 2 — `tasks/task-2.md`
 
@@ -116,3 +122,11 @@ Definition of done
 - **Task 1 — percent text:** one decimal (`toFixed(1)`), e.g. `46.7% funded`.
   Accepted edge case (not in current data): 99.96% displays as
   `100.0% funded` while still short.
+- **Pre-existing on `main`:** `npx tsc --noEmit` fails on
+  `tests/home.test.tsx` (Vitest globals have no types). New tests import
+  `describe`/`it`/`expect` from `vitest` explicitly to avoid adding to it.
+- **Task 1 — stacked PR mishap:** #3 (1.2) was stacked on #2 (1.1). #2
+  merged first, GitHub didn't retarget #3 (base branch not deleted), and #3
+  merged into `task-1.1-setup` — so 1.2 never reached `main`. Fixed by a new
+  PR from `task-1.2-funding-progress` into `main`. Led to the "PR merged into
+  `main`" DoD item and the no-stacking rule.
