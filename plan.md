@@ -4,8 +4,8 @@ Progress tracker for the timed exercise in `babylist-ai-codespace-practice/`.
 
 ## Status
 
-- **Current:** 1.2 — Funding progress indicator
-- **Completed:** 1.1 — Setup: test tooling + tracking docs
+- **Current:** —
+- **Completed:** Task 1 (1.1 — Setup; 1.2 — Funding progress indicator)
 - **Up next:** Task 2 (`tasks/task-2.md`)
 
 Status values: `Not started` / `In progress` / `Blocked` / `Complete`
@@ -40,7 +40,7 @@ Every item must be confirmed before a sub-task is marked Complete.
 
 ### Task 1 — Funding progress (`tasks/task-1.md`)
 
-**Status:** In progress
+**Status:** Complete (PRs awaiting review)
 **Worktree:** `.claude/worktrees/task-1`
 
 #### 1.1 — Setup: test tooling + tracking docs
@@ -69,10 +69,10 @@ Definition of done
 
 #### 1.2 — Funding progress indicator
 
-**Status:** Not started
+**Status:** Complete
 **Branch:** `task-1.2-funding-progress` (stacked on `task-1.1-setup`; PR
 targets it until 1.1 merges)
-**PR:** —
+**PR:** https://github.com/ryandrewjohnson/practice/pull/3
 
 Scope:
 - `src/lib/funding.ts`: pure helpers `totalContributed`, `percentFunded`,
@@ -94,11 +94,11 @@ Hand-check values:
 | Monitor | $220.00 / $199.00 | 110.6% | +$21.00 |
 
 Before you start
-- [ ] Ensure there are no uncommitted changes
+- [x] Ensure there are no uncommitted changes
 
 Definition of done
-- [ ] Commit changes
-- [ ] Create PR for review
+- [x] Commit changes
+- [x] Create PR for review
 
 ### Task 2 — `tasks/task-2.md`
 
@@ -116,3 +116,6 @@ Definition of done
 - **Task 1 — percent text:** one decimal (`toFixed(1)`), e.g. `46.7% funded`.
   Accepted edge case (not in current data): 99.96% displays as
   `100.0% funded` while still short.
+- **Pre-existing on `main`:** `npx tsc --noEmit` fails on
+  `tests/home.test.tsx` (Vitest globals have no types). New tests import
+  `describe`/`it`/`expect` from `vitest` explicitly to avoid adding to it.
