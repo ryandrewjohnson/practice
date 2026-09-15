@@ -146,7 +146,7 @@ Definition of done
 
 **Status:** In progress
 **Branch:** `task-2.1-contributor-list`
-**PR:** —
+**PR:** https://github.com/ryandrewjohnson/practice/pull/6
 
 Scope:
 - `src/lib/contributions.ts`: `sortContributions` — copy, highest amount
@@ -179,8 +179,8 @@ Definition of done
       negative amount (formatted + sorted last), tied amounts, duplicate
       names, input not mutated. The 2 negative-amount tests fail against the
       old `formatPrice`.
-- [ ] Commit changes
-- [ ] Create PR for review
+- [x] Commit changes
+- [x] Create PR for review
 - [ ] PR merged into `main` (verify the change is on `origin/main`)
 
 #### 2.2 — Contribution timestamps + relative time
