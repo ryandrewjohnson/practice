@@ -76,7 +76,8 @@ Definition of done
 
 **Status:** In progress — PR into `main` awaiting merge
 **Branch:** `task-1.2-funding-progress`
-**PR:** — (replaces #3, which merged into `task-1.1-setup` instead of `main`)
+**PR:** https://github.com/ryandrewjohnson/practice/pull/4 (replaces #3, which
+merged into `task-1.1-setup` instead of `main`)
 
 Scope:
 - `src/lib/funding.ts`: pure helpers `totalContributed`, `percentFunded`,
@@ -102,7 +103,7 @@ Before you start
 
 Definition of done
 - [x] Commit changes
-- [ ] Create PR for review
+- [x] Create PR for review
 - [ ] PR merged into `main` (verify the change is on `origin/main`)
 
 ### Task 2 — `tasks/task-2.md`
