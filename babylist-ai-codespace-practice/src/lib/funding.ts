@@ -1,7 +1,9 @@
 import type { GiftCampaign } from "@/lib/gift-data";
 
+// Sign goes before the currency symbol: -500 -> "-$5.00", not "$-5.00".
 export function formatPrice(cents: number) {
-  return `$${(cents / 100).toFixed(2)}`;
+  const sign = cents < 0 ? "-" : "";
+  return `${sign}$${(Math.abs(cents) / 100).toFixed(2)}`;
 }
 
 export function totalContributed(campaign: GiftCampaign) {

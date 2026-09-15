@@ -1,3 +1,4 @@
+import { ContributorList } from "@/components/ContributorList";
 import { FundingProgress } from "@/components/FundingProgress";
 import { campaigns } from "@/lib/gift-data";
 import { formatPrice, totalContributed } from "@/lib/funding";
@@ -27,6 +28,7 @@ export default function Home() {
                 {formatPrice(campaign.priceCents)}
               </div>
               <FundingProgress campaign={campaign} />
+              <ContributorList contributions={campaign.contributions} />
             </div>
           </li>
         ))}

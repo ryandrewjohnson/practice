@@ -4,9 +4,9 @@ Progress tracker for the timed exercise in `babylist-ai-codespace-practice/`.
 
 ## Status
 
-- **Current:** 1.3 — Funding edge cases (unhappy paths)
-- **Completed:** 1.1 — Setup; 1.2 — Funding progress indicator
-- **Up next:** Task 2 (`tasks/task-2.md`)
+- **Current:** 2.1 — Contributor list (expand, sort, amounts)
+- **Completed:** Task 1 (1.1, 1.2, 1.3)
+- **Up next:** 2.2 — Contribution timestamps + relative time
 
 Status values: `Not started` / `In progress` / `Blocked` / `Complete`
 
@@ -44,7 +44,7 @@ Every item must be confirmed before a sub-task is marked Complete.
 
 ### Task 1 — Funding progress (`tasks/task-1.md`)
 
-**Status:** In progress (1.3 open)
+**Status:** Complete
 **Worktree:** `.claude/worktrees/task-1`
 
 #### 1.1 — Setup: test tooling + tracking docs
@@ -110,7 +110,7 @@ Definition of done
 
 #### 1.3 — Funding edge cases (unhappy paths)
 
-**Status:** In progress
+**Status:** Complete
 **Branch:** `task-1.3-funding-edge-cases`
 **PR:** https://github.com/ryandrewjohnson/practice/pull/5
 
@@ -135,11 +135,80 @@ Definition of done
       (7 new unhappy-path tests fail against the 1.2 logic, pass with guards)
 - [x] Commit changes
 - [x] Create PR for review
+- [x] PR merged into `main` (merge commit `d08b6f5`)
+
+### Task 2 — Contributor details (`tasks/task-2.md`)
+
+**Status:** In progress
+**Worktree:** `.claude/worktrees/task-2`
+
+#### 2.1 — Contributor list (expand, sort, amounts)
+
+**Status:** In progress
+**Branch:** `task-2.1-contributor-list`
+**PR:** —
+
+Scope:
+- `src/lib/contributions.ts`: `sortContributions` — copy, highest amount
+  first, ties by name A–Z.
+- `src/components/ContributorList.tsx`: native `<details>` (collapsed by
+  default), summary "N contributions", rows of name + amount; "No
+  contributions yet" with nothing to expand when empty.
+- `formatPrice` puts the sign first for negatives (`-$5.00`, not `$-5.00`).
+- Tests: `tests/contributions.test.ts`, `tests/contributor-list.test.tsx`,
+  `formatPrice` cases in `tests/funding.test.ts`,
+  `e2e/task-2-contributor-details.spec.ts`.
+- Close out Task 1 in this file.
+
+Hand-check (expanded order):
+
+| Campaign | Order |
+|---|---|
+| Stroller | Grandma Ruth $200.00, Aunt Dana $150.00, Marcus $70.00 |
+| Car Seat | The Nguyens $250.00, Priya $125.00 |
+| Crib | Work Team $300.00, Uncle Jim $100.00, Neighbors $80.00, Sarah K. $50.00 |
+| Monitor | College Friends $220.00 |
+
+Before you start
+- [x] Ensure there are no uncommitted changes (fresh worktree from `main` at
+      `d08b6f5`)
+
+Definition of done
+- [x] Confirm edge cases are covered — happy: sorted desc, collapsed by
+      default, expand/collapse, singular label. Unhappy: no contributions,
+      negative amount (formatted + sorted last), tied amounts, duplicate
+      names, input not mutated. The 2 negative-amount tests fail against the
+      old `formatPrice`.
+- [ ] Commit changes
+- [ ] Create PR for review
 - [ ] PR merged into `main` (verify the change is on `origin/main`)
 
-### Task 2 — `tasks/task-2.md`
+#### 2.2 — Contribution timestamps + relative time
 
-**Status:** Not started — break down into sub-tasks when opened.
+**Status:** Not started (branch from `main` after 2.1 merges)
+**Branch:** `task-2.2-contribution-recency`
+**PR:** —
+
+Scope:
+- Add `contributedAt: string` (ISO) to `Contribution`; fixed mock values in
+  `gift-data.ts` spanning minutes → months, commented as mock data.
+- `formatRelativeTime(date, now)` via `Intl.RelativeTimeFormat`; rows show
+  "contributed 3 days ago".
+- `page.tsx` calls `await connection()` so relative times render per request,
+  not frozen at build time.
+- Edge cases: < 1 minute → "just now"; future timestamp → "just now";
+  invalid date → omit recency, keep the row; every unit threshold.
+- Tests: unit (fixed `now`), component, e2e asserts the `contributed … ago`
+  pattern only (server clock can't be controlled from the browser).
+
+Before you start
+- [ ] Ensure there are no uncommitted changes
+
+Definition of done
+- [ ] Confirm edge cases are covered — unhappy paths as well as the happy path
+- [ ] Commit changes
+- [ ] Create PR for review
+- [ ] PR merged into `main` (verify the change is on `origin/main`)
 
 ### Task 3 — `tasks/task-3.md`
 
@@ -163,3 +232,17 @@ Definition of done
   merged into `task-1.1-setup` — so 1.2 never reached `main`. Fixed by a new
   PR from `task-1.2-funding-progress` into `main`. Led to the "PR merged into
   `main`" DoD item and the no-stacking rule.
+- **Task 2 — no timestamps in the data:** `Contribution` has no date field.
+  Rather than invent dates silently, 2.2 adds an explicit `contributedAt`
+  field with values clearly marked as mock. Fixed dates will age ("3 days
+  ago" becomes "2 weeks ago" over time).
+- **Task 2 — expand/collapse:** native `<details>`/`<summary>` — no client JS,
+  page stays a server component, keyboard/screen-reader support built in.
+- **Task 2 — summary label:** "N contributions" rather than "N contributors",
+  since the same name can contribute more than once.
+- **Task 2 — not handled:** non-finite contribution amounts (NaN/Infinity).
+  The type is `number` and nothing in the data produces them; would need
+  validation across both funding math and the list.
+- **Dev-server hydration warning:** a mismatch on `<body>`
+  (`data-gr-ext-installed`, `data-new-gr-c-s-check-loaded`) comes from the
+  Grammarly browser extension, not app markup.
