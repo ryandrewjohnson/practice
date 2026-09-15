@@ -69,7 +69,7 @@ Definition of done
 
 #### 1.2 — Funding progress indicator
 
-**Status:** Not started
+**Status:** In progress
 **Branch:** `task-1.2-funding-progress` (stacked on `task-1.1-setup`; PR
 targets it until 1.1 merges)
 **PR:** —
@@ -94,7 +94,7 @@ Hand-check values:
 | Monitor | $220.00 / $199.00 | 110.6% | +$21.00 |
 
 Before you start
-- [ ] Ensure there are no uncommitted changes
+- [x] Ensure there are no uncommitted changes
 
 Definition of done
 - [ ] Commit changes
@@ -116,3 +116,6 @@ Definition of done
 - **Task 1 — percent text:** one decimal (`toFixed(1)`), e.g. `46.7% funded`.
   Accepted edge case (not in current data): 99.96% displays as
   `100.0% funded` while still short.
+- **Pre-existing on `main`:** `npx tsc --noEmit` fails on
+  `tests/home.test.tsx` (Vitest globals have no types). New tests import
+  `describe`/`it`/`expect` from `vitest` explicitly to avoid adding to it.

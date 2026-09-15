@@ -1,15 +1,48 @@
-import { campaigns } from "@/lib/gift-data";
+import { campaigns, type GiftCampaign } from "@/lib/gift-data";
+import {
+  formatPercent,
+  formatPrice,
+  overageCents,
+  percentFunded,
+  totalContributed,
+} from "@/lib/funding";
 
 // Existing application state. Renders group gift campaigns with no progress
 // indicator and no contributor detail - just totals. Rough on purpose; this
 // is "the app before your tasks."
 
-function formatPrice(cents: number) {
-  return `$${(cents / 100).toFixed(2)}`;
-}
+// Overfunded campaigns cap the bar at 100% and call out the overage as a
+// separate label, so the bar never breaks the card layout.
+function FundingProgress({ campaign }: { campaign: GiftCampaign }) {
+  const percent = percentFunded(campaign);
+  const overage = overageCents(campaign);
+  const percentLabel = `${formatPercent(percent)} funded`;
+  const overageLabel = overage > 0 ? `+${formatPrice(overage)} over` : null;
 
-function totalContributed(campaign: (typeof campaigns)[number]) {
-  return campaign.contributions.reduce((sum, c) => sum + c.amountCents, 0);
+  return (
+    <div className="mt-2">
+      <div
+        role="progressbar"
+        aria-label={`${campaign.itemName} funding`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.min(percent, 100)}
+        aria-valuetext={overageLabel ? `${percentLabel}, ${overageLabel}` : percentLabel}
+        className="h-2 w-full rounded-full bg-gray-200 overflow-hidden"
+      >
+        <div
+          className="h-full rounded-full bg-emerald-500"
+          style={{ width: `${Math.min(percent, 100)}%` }}
+        />
+      </div>
+      <div className="mt-1 text-xs text-gray-500 flex gap-2">
+        <span>{percentLabel}</span>
+        {overageLabel && (
+          <span className="font-medium text-emerald-700">{overageLabel}</span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -32,6 +65,7 @@ export default function Home() {
                 {formatPrice(totalContributed(campaign))} raised of{" "}
                 {formatPrice(campaign.priceCents)}
               </div>
+              <FundingProgress campaign={campaign} />
             </div>
           </li>
         ))}
