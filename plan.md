@@ -4,9 +4,8 @@ Progress tracker for the timed exercise in `babylist-ai-codespace-practice/`.
 
 ## Status
 
-- **Current:** 1.2 — Funding progress indicator (re-opened: PR into `main`
-  awaiting merge)
-- **Completed:** 1.1 — Setup: test tooling + tracking docs
+- **Current:** 1.3 — Funding edge cases (unhappy paths)
+- **Completed:** 1.1 — Setup; 1.2 — Funding progress indicator
 - **Up next:** Task 2 (`tasks/task-2.md`)
 
 Status values: `Not started` / `In progress` / `Blocked` / `Complete`
@@ -24,6 +23,7 @@ isn't Complete.
 
 Every item must be confirmed before a sub-task is marked Complete.
 
+- [ ] Confirm edge cases are covered — unhappy paths as well as the happy path
 - [ ] Commit changes
 - [ ] Create PR for review
 - [ ] PR merged into `main` (verify the change is on `origin/main`)
@@ -44,7 +44,7 @@ Every item must be confirmed before a sub-task is marked Complete.
 
 ### Task 1 — Funding progress (`tasks/task-1.md`)
 
-**Status:** In progress (1.2 awaiting merge into `main`)
+**Status:** In progress (1.3 open)
 **Worktree:** `.claude/worktrees/task-1`
 
 #### 1.1 — Setup: test tooling + tracking docs
@@ -74,7 +74,7 @@ Definition of done
 
 #### 1.2 — Funding progress indicator
 
-**Status:** In progress — PR into `main` awaiting merge
+**Status:** Complete — edge-case gaps found on review are handled in 1.3
 **Branch:** `task-1.2-funding-progress`
 **PR:** https://github.com/ryandrewjohnson/practice/pull/4 (replaces #3, which
 merged into `task-1.1-setup` instead of `main`)
@@ -102,6 +102,37 @@ Before you start
 - [x] Ensure there are no uncommitted changes
 
 Definition of done
+- [x] Confirm edge cases are covered — **gaps found** (price ≤ 0 → `NaN%` /
+      `Infinity%` and a full bar; negative total → full bar). Fixed in 1.3.
+- [x] Commit changes
+- [x] Create PR for review
+- [x] PR merged into `main` (merge commit `f6edc7b`)
+
+#### 1.3 — Funding edge cases (unhappy paths)
+
+**Status:** In progress
+**Branch:** `task-1.3-funding-edge-cases`
+**PR:** https://github.com/ryandrewjohnson/practice/pull/5
+
+Scope:
+- `percentFunded` returns `null` when the price isn't positive (0, negative,
+  NaN) and floors a negative total at 0%.
+- Move `FundingProgress` to `src/components/FundingProgress.tsx` (page files
+  can't export it for tests). Invalid price → "Funding progress unavailable",
+  no bar.
+- Unit tests (`tests/funding.test.ts`) and component tests
+  (`tests/funding-progress.test.tsx`) split into happy / unhappy path:
+  zero/negative/NaN price, negative total, no contributions, 1-cent overage,
+  99.96% rounding edge.
+- Add the "edge cases covered" item to the Definition of done.
+
+Before you start
+- [x] Ensure there are no uncommitted changes (branched from `main` after
+      #4 merged; only the DoD edit that ships with this sub-task)
+
+Definition of done
+- [x] Confirm edge cases are covered — unhappy paths as well as the happy path
+      (7 new unhappy-path tests fail against the 1.2 logic, pass with guards)
 - [x] Commit changes
 - [x] Create PR for review
 - [ ] PR merged into `main` (verify the change is on `origin/main`)
@@ -121,7 +152,9 @@ Definition of done
   overage is clearer than a visual overflow.
 - **Task 1 — percent text:** one decimal (`toFixed(1)`), e.g. `46.7% funded`.
   Accepted edge case (not in current data): 99.96% displays as
-  `100.0% funded` while still short.
+  `100.0% funded` while still short. Pinned by a test in 1.3.
+- **Task 1 — invalid data:** a non-positive price shows "Funding progress
+  unavailable" instead of a bar; a negative total (refunds) shows 0%.
 - **Pre-existing on `main`:** `npx tsc --noEmit` fails on
   `tests/home.test.tsx` (Vitest globals have no types). New tests import
   `describe`/`it`/`expect` from `vitest` explicitly to avoid adding to it.
