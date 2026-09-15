@@ -112,7 +112,7 @@ Definition of done
 
 **Status:** In progress
 **Branch:** `task-1.3-funding-edge-cases`
-**PR:** —
+**PR:** https://github.com/ryandrewjohnson/practice/pull/5
 
 Scope:
 - `percentFunded` returns `null` when the price isn't positive (0, negative,
@@ -133,8 +133,8 @@ Before you start
 Definition of done
 - [x] Confirm edge cases are covered — unhappy paths as well as the happy path
       (7 new unhappy-path tests fail against the 1.2 logic, pass with guards)
-- [ ] Commit changes
-- [ ] Create PR for review
+- [x] Commit changes
+- [x] Create PR for review
 - [ ] PR merged into `main` (verify the change is on `origin/main`)
 
 ### Task 2 — `tasks/task-2.md`
